@@ -6,15 +6,18 @@ const { PORT } = process.env;
 const express = require("express");
 //create app object
 const app = express();
+const userRouter = require("./controllers/userController");
 
 //import middleware
 const cors = require('cors');
 const morgan = require('morgan');
 
+
 //middleware
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
+app.use("/user", userRouter)
 
 //test route
 app.get('/', (req, res) =>{
