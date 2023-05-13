@@ -7,7 +7,7 @@ const express = require("express");
 //create app object
 const app = express();
 const userRouter = require("./controllers/userController");
-
+const authController = require("./controllers/authController")
 //import middleware
 const cors = require('cors');
 const morgan = require('morgan');
@@ -18,6 +18,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use("/user", userRouter)
+app.use("/auth", authController)
 
 //test route
 app.get('/', (req, res) =>{
