@@ -7,12 +7,15 @@ const router = express.Router();
 
 //sign uo route 
 router.post("/register", async (req, res, next) =>{
+    //try block for error handling 
     try{
+        //gen salt value using bcrypt
         const salt = await bcrypt.genSalt(10);
+        //hashes password using salt 
         const passwordHash = await bcrypt.hash(req.body.password, salt);
-
+        //updates password to the value returned in previous line
         req.body.password = passwordHash;
-
+        //creates new user in database
         const newUser = await User.create(req.body);
         
         res.status(201).json({
