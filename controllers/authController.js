@@ -27,7 +27,7 @@ router.post("/register", async (req, res, next) =>{
     }
 });
 
-//sogn in route
+//sign in route
 router.post("/login", async (req, res, next) =>{})
 
 module.exports = router;

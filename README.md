@@ -16,20 +16,3 @@ https://trello.com/b/U2NN9TsL/imageiq
 ## User Story 
 As a user, I want a clean and responsive UI. Initially a clear home page that prompts account creation. Once an account is created there will be an option to drag and drop an image onto the screen. API will return information on what is in the image. The User will have the option to upload another image and begin a new search or access their user upload history
 
-## Wireframe 
-
-- backend
-        - controllers
-            - userController.js
-            - imageController.js
-            - authController.js
-        - models
-            - User.js
-            - Image.js
-        - api
-            - mobileNetService.js
-        - server.js
-    - .env
-    - package.json
-
-
