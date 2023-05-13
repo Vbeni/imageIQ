@@ -19,7 +19,6 @@ As a user, I want a clean and responsive UI. Initially a clear home page that pr
 ## Wireframe 
 
 - backend
-    - src
         - controllers
             - userController.js
             - imageController.js
@@ -29,7 +28,6 @@ As a user, I want a clean and responsive UI. Initially a clear home page that pr
             - Image.js
         - api
             - mobileNetService.js
-        - app.js
         - server.js
     - .env
     - package.json
