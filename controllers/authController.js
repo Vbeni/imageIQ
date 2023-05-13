@@ -1,9 +1,11 @@
 const express = require("express");
 const User = require("../models/User");
+//for user auth 
 const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
+//sign uo route 
 router.post("/register", async (req, res, next) =>{
     try{
         const salt = await bcrypt.genSalt(10);
@@ -22,6 +24,7 @@ router.post("/register", async (req, res, next) =>{
     }
 });
 
+//sogn in route
 router.post("/login", async (req, res, next) =>{})
 
 module.exports = router;
