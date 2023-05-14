@@ -10,6 +10,14 @@ router.get("/", async (req, res) =>{
         res.status(400).json(error);
     }
 });
+//user show route 
+router.get("/:id", async (req, res) => {
+    try{
+        res.json( await User.findById(req.params.id));
+    }catch(error){
+        res.status(400).json(error)
+    }
+})
 //user edit route 
 router.put("/:id", async (req, res) =>{
     try{
@@ -20,14 +28,6 @@ router.put("/:id", async (req, res) =>{
         res.status(400).json(error);
     }
 });
-//user show route 
-router.get("/:id", async (req, res) => {
-    try{
-        res.json( await User.findById(req.params.id));
-    }catch(error){
-        res.status(400).json(error)
-    }
-})
 router.delete("/:id", async (req, res) => {
     try {
         res.json(
