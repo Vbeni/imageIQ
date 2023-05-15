@@ -16,11 +16,18 @@ router.post("/register", async (req, res, next) =>{
         req.body.password = passwordHash;
         //creates new user in database
         const newUser = await User.create(req.body);
-        
-        res.status(201).json({
-            currentUser: newUser,
-            isLoggedIn: true,
+
+        if(newUser) {
+            req.body.password = pwStore;
+            const authenticatedUserToken = createUserToken(req, newUser);
+            res.status(201).json({
+                currentUser: newUser,
+                isLoggedIn: true,
+                token: authenticatedUserToken,
         });
+        }else{
+            res.status(400).json({error: "Something went wrong"})
+        }
     } catch (err) {
         res.status(400).json({ err: err.message});
     }
