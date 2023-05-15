@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("../models/User");
 const router = express.Router();
+const { createUserToken } = require("../middleware/auth");
 //for user auth 
 
 //sign uo route 
@@ -26,6 +27,19 @@ router.post("/register", async (req, res, next) =>{
 });
 
 //sign in route
-router.post("/login", async (req, res, next) =>{})
+router.post("/login", async (req, res, next) =>{
+    try{
+        const loggingUser = req.body.username;
+        const foundUser = await User.findOne({ username: loggingUser });
+        const token = await createUserToken(req, foundUser);
+        res.status(200).json({
+            user: foundUser,
+            isLoggedIn: true,
+            token,
+        });
+    }catch(err){
+        res.status(401).json({ error: err.message });
+    }
+});
 
 module.exports = router;
