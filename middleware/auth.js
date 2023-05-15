@@ -5,6 +5,16 @@ const {Strategy, ExctractJwt, ExtractJwt } = require('passport-jwt');
 const secret = process.env.JWT_SECRET;
 const User = require('../models/User')
 
+const handleValidateOwnership = (req, document) => {
+    const ownerId = document.owner._id || document.owner;
+
+    if(!req.user._id.equals(ownerId)){
+        throw Error("Unauthorized Access");
+    }else{
+        return document;
+    }
+};
+
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: secret
