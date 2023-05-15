@@ -8,6 +8,7 @@ const express = require("express");
 const app = express();
 const userRouter = require("./controllers/userController");
 const authController = require("./controllers/authController")
+const imageController = require("./controllers/imageController");
 //import middleware
 const cors = require('cors');
 const morgan = require('morgan');
@@ -19,6 +20,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use("/user", userRouter)
 app.use("/auth", authController)
+app.use("/image", imageController)
 
 //test route
 app.get('/', (req, res) =>{
