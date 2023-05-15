@@ -22,9 +22,12 @@ router.post("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try{
-        res.json(await Image.findById)(req.params.id)
+        const foundImage = await Image.findById(req.params.id)
+        .populate("owner")
+        .exec();
+        res.status(200).json(foundImage);
     }catch(error){
-        res.status(400).json(error);
+        res.status(400).json({error: error.message });
     }
 })
 
