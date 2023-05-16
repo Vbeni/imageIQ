@@ -39,19 +39,24 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) =>{
     try{
-        res.json(
-            await Image.findByIdAndUpdate(req.params.id, req.body, { new: true})
-        );
+       handleValidateOwnership(req, await Image.findById(req.params.id))
+       const updatedImage = await Image.findByIdAndUpdate(
+       req.params.id,
+       req.body,
+        { new: true }
+      )
+       res.status(200).json(updatedImage)
     }catch(error){
-        res.status(400).json(error);
+       res.status(400).json({error: error.message});
     }
 });
 router.delete("/:id", async (req, res) => {
     try {
-        res.json(
-            await Image.findByIdAndRemove(req.params.id));
+        handleValidateOwnership(req, await Image.findById(req.params.id));
+        const deletedImage = await Image.findByIdAndRemove(req.params.id);
+        res.status(200).json(deletedImage);   
     }catch(error) {
-        res.status(400).json(error);
+        res.status(400).json({error: error.message});
     }
 });
 module.exports = router
