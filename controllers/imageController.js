@@ -1,6 +1,7 @@
 const express = require('express')
 const Image = require("../models/Image")
 const router = express.Router()
+const { handleValidateOwnership, requireToken } = require("../middleware/auth")
 
 //index 
 router.get("/", async (req, res) => {
@@ -12,11 +13,16 @@ router.get("/", async (req, res) => {
 });
 
 //create route 
-router.post("/", async (req, res) => {
+router.post("/", requireToken, async (req, res) => {
    try{
-    res.json(await Image.create(req.body));
+    const owner = req.user._id
+    req.body.owner = owner
+    const newImage = await Image.create(req.body); 
+    res.status(201).json(newImage);
    }catch (error){
-    res.status(400).json(error);
+    res.status(400).json({
+        error: error.message,
+    });
    }
 });
 
