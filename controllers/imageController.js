@@ -18,6 +18,13 @@ router.post("/", requireToken, async (req, res) => {
     const owner = req.user._id
     req.body.owner = owner
     const newImage = await Image.create(req.body); 
+
+    const image = req.body.image;
+    const predictions = await mobileNetService.classifyImage(image);
+    newImage.Predictions = predictions;
+
+    await newImage.save();
+    
     res.status(201).json(newImage);
    }catch (error){
     res.status(400).json({
