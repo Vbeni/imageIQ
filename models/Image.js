@@ -11,6 +11,18 @@ const ImageSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    Predictions: [
+        {
+            className: {
+                type: String, 
+                required: true
+            },
+            probability: {
+                type: Number,
+                required: true
+            }
+        }
+    ]
 },
 {
     timestamps: true,

@@ -2,7 +2,7 @@ const express = require('express')
 const Image = require("../models/Image")
 const router = express.Router()
 const { handleValidateOwnership, requireToken } = require("../middleware/auth")
-
+const mobileNetService = require('../services/mobileNet');
 //index 
 router.get("/", async (req, res) => {
     try {
