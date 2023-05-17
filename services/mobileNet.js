@@ -1,3 +1,4 @@
+require('@tensorflow/tfjs-node')
 const mobilenet = require('@tensorflow-models/mobilenet');
 
 let model; 
