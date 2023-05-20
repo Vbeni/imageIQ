@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const {Strategy, ExctractJwt, ExtractJwt } = require('passport-jwt');
+const {Strategy, ExtractJwt } = require('passport-jwt');
 const secret = process.env.JWT_SECRET;
 const User = require('../models/User')
 
@@ -20,6 +20,7 @@ const verify = async (jwt_payload, done) => {
 }
 
 const strategy = new Strategy(opts,verify)
+passport.use(strategy)
 passport.initialize()
 
 const requireToken = passport.authenticate('jwt', {session: false})
