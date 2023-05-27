@@ -2,8 +2,14 @@ const express = require('express')
 const Image = require("../models/Image")
 const router = express.Router()
 const { handleValidateOwnership, requireToken } = require("../middleware/auth")
-const mobileNetService = require('../services/mobileNet');
+
 //index 
+const tf = require('@tensorflow/tfjs-node');
+const mobilenet = require('@tensorflow-models/mobilenet');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
+
 router.get("/", async (req, res) => {
     try {
         res.json(await Image.find({}));
@@ -14,24 +20,29 @@ router.get("/", async (req, res) => {
 
 //create route 
 router.post("/", requireToken, async (req, res) => {
-   try{
-    const owner = req.user._id
-    req.body.owner = owner
-    const newImage = await Image.create(req.body); 
-
-    const image = req.body.image;
-    const predictions = await mobileNetService.classifyImage(image);
-    newImage.Predictions = predictions;
-
-    await newImage.save();
-    
-    res.status(201).json(newImage);
-   }catch (error){
-    res.status(400).json({
+    try {
+      const owner = req.user._id;
+      req.body.owner = owner;
+  
+      // Get the image data from the request body
+      const imageBuffer = Buffer.from(req.body.image, 'base64');
+      const tfimage = tf.node.decodeImage(imageBuffer);
+  
+      // Load the MobileNet model and classify the image
+      const model = await mobilenet.load();
+      const predictions = await model.classify(tfimage);
+      req.body.Predictions = predictions;
+  
+      const newImage = await Image.create(req.body);
+  
+      res.status(201).json(newImage);
+    } catch (error) {
+      res.status(400).json({
         error: error.message,
-    });
-   }
-});
+      });
+    }
+  });
+  
 
 router.get("/:id", async (req, res) => {
     try{
