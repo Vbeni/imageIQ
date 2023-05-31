@@ -7,7 +7,7 @@ const { createUserToken, requireToken } = require("../middleware/auth");
 
 //sign uo route 
 router.post("/register", async (req, res, next) =>{
-    console.log("duuuuuuuuudee")
+    
     try {
       const salt = await bcrypt.genSalt(10);
       const passwordHash = await bcrypt.hash(req.body.password, salt);
@@ -19,11 +19,14 @@ router.post("/register", async (req, res, next) =>{
       if (newUser) {
         req.body.password = pwStore;
         const authenticatedUserToken = createUserToken(req, newUser);
+        
+
        res.status(201).json({
         currentUser: newUser,
         isLoggedIn: true,
         token: authenticatedUserToken
       });
+      
     }else{
       res.status(400).json({error: "Something went wrong"})
     }

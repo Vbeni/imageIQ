@@ -2,10 +2,10 @@ const mongoose = require('./connection');
 const bcrypt = require('bcrypt');
 
 const ImageSchema = new mongoose.Schema({
-    Owner: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true,
+        required: false,
     },
     Image: {
         type: String,
@@ -15,11 +15,11 @@ const ImageSchema = new mongoose.Schema({
         {
             className: {
                 type: String, 
-                required: true
+                required: false
             },
             probability: {
                 type: Number,
-                required: true
+                required: false
             }
         }
     ]

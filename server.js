@@ -30,5 +30,3 @@ app.get('/', (req, res) =>{
 app.listen(PORT, () => console.log(`Forever listening to the one the only PORT ${PORT}`));
 
 
-//configure signup()
-//add to App.js when frontend is ready 
